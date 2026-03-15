@@ -1095,6 +1095,9 @@ class BattleServantData {
       case BuffAction.toleranceSubstate:
       case BuffAction.guts:
         results = opponent?.getTraits(addTraits: addTraits) ?? addTraits;
+        if (results == null && buff.buff.ckOpIndv.every((t) => t < 0)) {
+          results = buff.buff.ckOpIndv;
+        }
       case BuffAction.functionDamage:
       case BuffAction.avoidanceIndividuality:
       case BuffAction.specialInvincible:
