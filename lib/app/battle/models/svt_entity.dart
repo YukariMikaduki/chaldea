@@ -2179,6 +2179,7 @@ class BattleServantData {
     final BattleServantData? opponent,
     final CommandCardData? card,
     final List<int>? addTraits,
+    final bool useBuff = true,
   }) async {
     return await getBuff(battleData, buffAction, opponent: opponent, card: card, addTraits: addTraits, useBuff: true) !=
         null;
@@ -2625,11 +2626,15 @@ class BattleServantData {
       turnEndLog += ' - dot ${S.current.battle_damage}: $turnEndDamage';
     }
 
+    // check guts after dot (reduceHp)
     if (hp <= 0) {
       if (hasNextShift(battleData)) {
         hp = 1;
       } else {
-        resetLastHits();
+        final gutsActivated = await activateGuts(battleData);
+        if (!gutsActivated) {
+          resetLastHits();
+        }
       }
     }
 
@@ -2659,6 +2664,19 @@ class BattleServantData {
     final allBuffs = getAllBuffs(battleData);
     final delayedFunctions = collectBuffsPerType(allBuffs, BuffType.delayFunction);
     await activateBuff(battleData, BuffAction.functionSelfturnend);
+
+    // check guts after selfturnendFunction
+    if (hp <= 0) {
+      if (hasNextShift(battleData)) {
+        hp = 1;
+      } else {
+        final gutsActivated = await activateGuts(battleData);
+        if (!gutsActivated) {
+          resetLastHits();
+        }
+      }
+    }
+
     await activateDelayFunction(battleData, delayedFunctions.where((buff) => buff.logicTurn == 0));
 
     battleBuff.selfTurnPass();
