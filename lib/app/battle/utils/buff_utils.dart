@@ -57,14 +57,14 @@ bool checkSignedIndividualitiesPartialMatch({
 }
 
 bool checkSignedIndividualities2({
-  required final Iterable<int> myTraits,
-  required final Iterable<int> requiredTraits,
+  required final Iterable<int>? myTraits,
+  required final Iterable<int>? requiredTraits,
   final bool Function(Iterable<int>, Iterable<int>) positiveMatchFunc = partialMatch,
   final bool Function(Iterable<int>, Iterable<int>) negativeMatchFunc = partialMatch,
 }) {
   return Individuality.checkSignedIndividualities2(
-    self: myTraits.toList(),
-    signedTarget: requiredTraits.toList(),
+    self: myTraits?.toList(),
+    signedTarget: requiredTraits?.toList(),
     matchedFunc: positiveMatchFunc == partialMatch ? Individuality.isPartialMatchArray : Individuality.isMatchArray,
     mismatchFunc: positiveMatchFunc == partialMatch ? Individuality.isPartialMatchArray : Individuality.isMatchArray,
   );

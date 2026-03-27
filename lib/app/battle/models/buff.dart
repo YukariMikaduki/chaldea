@@ -369,7 +369,7 @@ class BuffData {
               negativeMatchFunc: allMatch,
             ) &&
             checkSignedIndividualities2(
-              myTraits: opponentTraits ?? [],
+              myTraits: opponentTraits,
               requiredTraits: buff.ckOpIndv,
               positiveMatchFunc: allMatch,
               negativeMatchFunc: allMatch,
@@ -396,7 +396,7 @@ class BuffData {
               negativeMatchFunc: partialMatch,
             ) &&
             checkSignedIndividualities2(
-              myTraits: opponentTraits ?? [],
+              myTraits: opponentTraits,
               requiredTraits: buff.ckOpIndv,
               positiveMatchFunc: partialMatch,
               negativeMatchFunc: partialMatch,
