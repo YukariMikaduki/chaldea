@@ -8,6 +8,7 @@ import 'package:chaldea/app/battle/utils/battle_logger.dart';
 import 'package:chaldea/app/battle/utils/battle_utils.dart';
 import 'package:chaldea/app/battle/utils/buff_utils.dart';
 import 'package:chaldea/generated/l10n.dart';
+import 'package:chaldea/models/gamedata/individuality.dart';
 import 'package:chaldea/models/models.dart';
 import 'package:chaldea/utils/utils.dart';
 import 'ai.dart';
@@ -1256,12 +1257,7 @@ class BattleServantData {
     return buffList.where((buff) {
       if (buff.vals.IgnoreIndividuality == 1 && !includeIgnoreIndiv) return false;
       if (ignoreIndivUnreleaseable && buff.irremovable) return false;
-      return checkSignedIndividualities2(
-        myTraits: buff.getTraits(),
-        requiredTraits: traits,
-        positiveMatchFunc: partialMatch,
-        negativeMatchFunc: partialMatch,
-      );
+      return Individuality.checkSignedIndivPartialMatch(self: buff.getTraits(), signedTarget: traits);
     }).toList();
   }
 
