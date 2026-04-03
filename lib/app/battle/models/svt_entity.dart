@@ -1588,6 +1588,14 @@ class BattleServantData {
     return !isSkillSealed(skillIndex) && !isSkillCondFailed(battleData, skillIndex);
   }
 
+  bool canSkillCoolDown(final BattleData battleData, final int skillIndex) {
+    if (skillInfoList.length <= skillIndex || skillIndex < 0) {
+      return false;
+    }
+
+    return skillInfoList[skillIndex].skill != null && canAttack() && !isSkillSealed(skillIndex);
+  }
+
   bool canOrderChange() {
     return !hasBuffNoProbabilityCheck(BuffAction.donotReplace);
   }
@@ -2575,7 +2583,7 @@ class BattleServantData {
     } else {
       for (int skillIdx = 0; skillIdx < skillInfoList.length; skillIdx++) {
         final skill = skillInfoList[skillIdx];
-        if (canUseSkillIgnoreCoolDown(battleData, skillIdx)) {
+        if (canSkillCoolDown(battleData, skillIdx)) {
           skill.turnEnd();
         }
       }
